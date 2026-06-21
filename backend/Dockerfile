@@ -13,8 +13,9 @@ RUN npm ci --workspace=backend --ignore-scripts
 COPY backend/prisma ./backend/prisma
 RUN cd backend && npx prisma generate
 
-# Compile TypeScript
+# Compile TypeScript (seed.ts copied into src so rootDir constraint is satisfied)
 COPY backend/src ./backend/src
+COPY backend/prisma/seed.ts ./backend/src/seed.ts
 COPY backend/tsconfig.json ./backend/tsconfig.json
 RUN npm run build -w backend
 
@@ -42,4 +43,4 @@ WORKDIR /app/backend
 EXPOSE 3001
 
 # Run migrations then start server
-CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node_modules/.bin/prisma db seed && node dist/index.js"]
+CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node dist/seed.js && node dist/index.js"]
