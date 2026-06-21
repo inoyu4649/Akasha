@@ -227,7 +227,7 @@ export default function AdminPage() {
                       contentStyle={tooltipStyle}
                       labelStyle={{ color: "#e8e8e8" }}
                       itemStyle={{ color: CHART_COLORS.bar }}
-                      formatter={(v: number) => [`${v} 크레딧`, "사용량"]}
+                      formatter={(v) => [`${Number(v)} 크레딧`, "사용량"]}
                     />
                     <Bar dataKey="totalCredits" fill={CHART_COLORS.bar} radius={[3, 3, 0, 0]} />
                   </BarChart>
@@ -263,7 +263,7 @@ export default function AdminPage() {
                       contentStyle={tooltipStyle}
                       labelStyle={{ color: "#e8e8e8" }}
                       itemStyle={{ color: CHART_COLORS.bar }}
-                      formatter={(v: number) => [`${v} 크레딧`, "사용량"]}
+                      formatter={(v) => [`${Number(v)} 크레딧`, "사용량"]}
                     />
                     <Bar dataKey="totalCredits" fill={CHART_COLORS.bar} radius={[0, 3, 3, 0]} />
                   </BarChart>
