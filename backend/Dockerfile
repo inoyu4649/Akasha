@@ -42,4 +42,4 @@ WORKDIR /app/backend
 EXPOSE 3001
 
 # Run migrations then start server
-CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node dist/index.js"]
+CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy && node_modules/.bin/prisma db seed && node dist/index.js"]
