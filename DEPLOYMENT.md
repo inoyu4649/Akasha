@@ -1,8 +1,8 @@
 # Akasha — 서버 배포 가이드
 
 > **대상 환경:** AWS EC2 (us-east-1, 버지니아 북부)  
-> **권장 인스턴스:** t3.large (2 vCPU / 8GB RAM) 또는 m6i.large  
-> **OS:** Ubuntu 22.04 LTS  
+> **인스턴스:** t4g.large (Graviton2 ARM / 2 vCPU / 8GB RAM)  
+> **OS:** Ubuntu 22.04 LTS (ARM64)  
 > **도메인:** `ai.akademiya.kr`
 
 ---
@@ -46,8 +46,8 @@
 | 항목 | 값 |
 |------|----|
 | 리전 | us-east-1 (버지니아 북부) |
-| AMI | Ubuntu Server 22.04 LTS (HVM), SSD — 64-bit (x86) |
-| 인스턴스 타입 | **t3.large** (2 vCPU / 8GB RAM) |
+| AMI | Ubuntu Server 22.04 LTS (HVM), SSD — **64-bit (Arm)** |
+| 인스턴스 타입 | **t4g.large** (Graviton2 / 2 vCPU / 8GB RAM) |
 | 스토리지 | gp3 / 30GB (Ollama 모델 저장 공간) |
 | 키 페어 | 기존 키 페어 선택 또는 새로 생성 |
 
@@ -277,7 +277,7 @@ docker compose exec ollama ollama pull deepseek-r1-distill-qwen:7b
 watch -n 2 free -h
 ```
 
-> **참고:** 7B 모델은 약 4.5~5GB RAM. t3.large(8GB)에서 단일 모델 추론은 안정적으로 동작합니다.
+> **참고:** 7B 모델은 약 4.5~5GB RAM. t4g.large(8GB)에서 단일 모델 추론은 안정적으로 동작합니다.
 
 ---
 
@@ -435,7 +435,7 @@ proxy_read_timeout 600s;
                               (단일 모델, keep_alive=0)
 ```
 
-### 메모리 배분 (t3.large / 8GB)
+### 메모리 배분 (t4g.large / 8GB)
 
 | 서비스    | 메모리 상한 | CPU 상한 |
 |-----------|-------------|----------|
@@ -451,13 +451,13 @@ proxy_read_timeout 600s;
 
 | 항목 | 단가 | 월 예상 |
 |------|------|---------|
-| t3.large (On-Demand) | $0.0832/h | ~$60 |
+| t4g.large (On-Demand) | $0.0672/h | ~$49 |
 | EBS gp3 30GB | $0.08/GB-월 | ~$2.40 |
 | Elastic IP (연결됨) | 무료 | $0 |
 | 데이터 전송 (아웃바운드 1GB~) | $0.09/GB | ~$0.09 |
-| **합계** | | **~$63/월** |
+| **합계** | | **~$52/월** |
 
-> 비용 절감: **Reserved Instance (1년)** 구매 시 약 40% 절감 (~$37/월)
+> 비용 절감: **Reserved Instance (1년)** 구매 시 약 40% 절감 (~$31/월)
 
 ---
 
