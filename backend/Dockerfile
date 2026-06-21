@@ -33,7 +33,6 @@ RUN npm ci --workspace=backend --omit=dev --ignore-scripts
 # Copy Prisma schema + generated client
 COPY backend/prisma ./backend/prisma
 COPY --from=builder /app/backend/node_modules/.prisma ./backend/node_modules/.prisma
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma 2>/dev/null || true
 
 # Copy compiled output
 COPY --from=builder /app/backend/dist ./backend/dist
